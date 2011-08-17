@@ -10,24 +10,40 @@
 Joomla = Joomla || {};
 
 Joomla.Installer = new Class({
-	initialize: function(view, fileBt, directoryBt, urlBt, fileInput) {
+	initialize: function(view, fileBt, directoryBt, urlBt, fileInput, directoryInput, urlInput) {
 		fileBt = document.id(fileBt);
 		directoryBt = document.id(directoryBt);
 		urlBt = document.id(urlBt);
-		this.fileInput = document.id(fileInput);
-		
+		fileInput = document.id(fileInput);
+		directoryInput = document.id(directoryInput);
+		urlInput = document.id(urlInput);
+
 		Joomla.spinner = new Spinner(view);
-		
+
 		fileBt.addEvent('click', function(e) {
-			event.target.form.installtype.value = 'upload';
-			event.target.form.submit();
+			if (fileInput.value == "") {
+				alert(Locale.get('com_installer.errorEmptyUpload'));
+			} else {
+				event.target.form.installtype.value = 'upload';
+				event.target.form.submit();
+			}
 		});
 
 		directoryBt.addEvent('click', function(e){
-			this.install(e);
+			if (directoryInput.value == "") {
+				alert(Locale.get('com_installer.errorEmptyFolder'));
+			} else {
+				event.target.form.installtype.value = 'folder';
+				this.install(e);
+			}
 		}.bind(this));
 		urlBt.addEvent('click', function(e){
-			this.install(e);
+			if (urlInput.value == "" || urlInput.value == "http://") {
+				alert(Locale.get('com_installer.errorEmptyUrl'));
+			} else {
+				event.target.form.installtype.value = 'url';
+				this.install(e);
+			}
 		}.bind(this));
 
 		FormData.extend = function(){};
@@ -35,7 +51,6 @@ Joomla.Installer = new Class({
 	},
 	
 	install: function(event) {
-		event.target.form.installtype.value = event.target.get('data-installtype');
 		this.removeExtensionMessage();
 
 		var req = new Request.JSON({
@@ -46,6 +61,11 @@ Joomla.Installer = new Class({
 			},
 			onSuccess: function (r) {
 				Joomla.replaceTokens(r.token);
+
+				this.input[this.installtype].value = '';
+				if (this.installtype == 'url') {
+					this.input[this.installtype].value = 'http://';
+				}
 
 				Joomla.spinner.hide(true);
 				if (r.messages) {
