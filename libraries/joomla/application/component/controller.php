@@ -250,8 +250,10 @@ class JController extends JObject
 			$task	= $command;
 
 			// Define the controller filename and path.
-			$file	= self::createFileName('controller', array('name' => 'controller', 'format' => $format));
-			$path	= $basePath.'/'.$file;
+			$file		= self::createFileName('controller', array('name' => 'controller', 'format' => $format));
+			$path		= $basePath.'/'.$file;
+			$backupfile	= self::createFileName('controller', array('name' => 'controller'));
+			$backuppath	= $basePath.'/'.$backupfile;
 		}
 
 		// Get the controller class name.
@@ -262,6 +264,9 @@ class JController extends JObject
 			// If the controller file path exists, include it.
 			if (file_exists($path)) {
 				require_once $path;
+			}
+			else if (file_exists($backuppath)) {
+				require_once $backuppath;
 			}
 			else {
 				throw new JException(JText::sprintf('JLIB_APPLICATION_ERROR_INVALID_CONTROLLER', $type, $format), 1056, E_ERROR, $type, true);

@@ -129,31 +129,30 @@ $canDo		= SearchHelper::getActions();
 		</tfoot>
 		<tbody>
 		<?php foreach ($this->items as $i => $item) : ?>
-			<tr class="row<?php echo $i % 2; ?>">
-					<td class="right">
-						<?php echo $i + 1 + $this->pagination->limitstart; ?>
-					</td>
-					<td>
-						<?php echo $this->escape($item->search_term); ?>
-					</td>
-					<td class="center">
-						<?php echo (int) $item->hits; ?>
-					</td>
-					<td class="center">
+			<tr>
+				<td class="right">
+					<?php echo $i + 1 + $this->pagination->limitstart; ?>
+				</td>
+				<td>
+					<?php echo $this->escape($item->search_term); ?>
+				</td>
+				<td class="center">
+					<?php echo (int) $item->hits; ?>
+				</td>
+				<td class="center">
 					<?php if ($this->state->get('filter.results')) : ?>
 						<?php echo (int) $item->returns; ?>
 					<?php else: ?>
 						<?php echo JText::_('COM_SEARCH_NO_RESULTS'); ?>
 					<?php endif; ?>
-					</td>
-					<td>
-						&#160;
-					</td>
-				</tr>
-			<?php endforeach; ?>
-			</tbody>
-		</table>
-
+				</td>
+				<td>
+					&#160;
+				</td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
 
 	<div>
 		<input type="hidden" name="task" value="" />

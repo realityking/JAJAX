@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.view');
 
 /**
- * HTML View class for the Login component
+ * JSON View class for the Login component
  *
  * @package		Joomla.Administrator
  * @subpackage	com_login

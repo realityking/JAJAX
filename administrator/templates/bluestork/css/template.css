@@ -1514,7 +1514,7 @@ table.adminlist tbody tr td {
 	border: 1px solid #fff;
 }
 
-table.adminlist tbody tr.row1 td {
+table.adminlist tr:nth-child(even) td {
 	background: #f0f0f0;
 	border-top: 1px solid #FFF;
 }
