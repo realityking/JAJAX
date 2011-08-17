@@ -19,6 +19,59 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
 $canDo		= SearchHelper::getActions();
 ?>
+<script type="text/javascript">
+	// Only define the Joomla namespace if not defined.
+	if (typeof(Joomla) === 'undefined') {
+		var Joomla = {};
+	}
+
+	Joomla.submitbutton = function(pressbutton) {
+		if (pressbutton == 'searches.reset') {
+			var form = document.id('adminForm');
+			form.task.value = pressbutton;
+
+			var req = new Request.JSON({
+				method: 'post',
+				url: form.action+'&format=json',
+				onRequest: function() {
+					Joomla.spinner.show(true);
+				},
+				onSuccess: function(r) {
+					Joomla.replaceTokens(r.token);
+					Joomla.spinner.hide(true);
+					if (r.messages) {
+						Joomla.renderMessages(r.messages);
+					}
+					
+					if (r.data.success) {
+						var elems = $$('#searchtable > tbody > *');
+						elems.destroy();
+					}
+				},
+				onFailure: function(xhr) {
+					var r = JSON.decode(xhr.responseText);
+
+					Joomla.spinner.hide(true);
+					if (r) {
+						Joomla.replaceTokens(r.token);
+						if (r.messages) {
+							Joomla.renderMessages(r.messages);
+						}
+						alert(r.message);
+					}
+				}
+			});
+
+			req.post(form.toQueryString());
+		} else {
+			Joomla.submitform(pressbutton);
+		}
+	}
+	
+	window.addEvent('domready', function() {
+		Joomla.spinner = new Spinner('searchtable');
+	});
+</script>
 <form action="<?php echo JRoute::_('index.php?option=com_search&view=searches'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
@@ -47,7 +100,7 @@ $canDo		= SearchHelper::getActions();
 	</fieldset>
 	<div class="clr"> </div>
 
-	<table class="adminlist">
+	<table class="adminlist" id="searchtable">
 		<thead>
 			<tr>
 				<th width="20">
