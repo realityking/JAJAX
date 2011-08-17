@@ -52,6 +52,7 @@ Joomla.Installer = new Class({
 	
 	install: function(event) {
 		this.removeExtensionMessage();
+		Joomla.removeMessages();
 
 		var req = new Request.JSON({
 			method: 'post',
@@ -126,6 +127,6 @@ Joomla.Installer = new Class({
 	},
 	
 	removeExtensionMessage: function() {
-		$$('#installmessage > *').destroy();
+		document.id('installmessage').empty();
 	}
 });
