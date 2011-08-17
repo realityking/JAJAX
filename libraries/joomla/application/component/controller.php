@@ -1042,10 +1042,16 @@ class JController extends JObject
 		if ($response instanceof Exception) {
 			// Send the appropriate error code response.
 			JResponse::setHeader('status', $response->getCode());
+			JResponse::setHeader('Content-Type', 'application/json; charset=utf-8');
+			JResponse::sendHeaders();
 		}
 
 		// Send the JSON response.
 		echo json_encode(new JControllerJsonResponse($response));
+
+		// Close the application.
+		$app = JFactory::getApplication();
+		$app->close();
 	}
 }
 
@@ -1088,7 +1094,7 @@ class JControllerJsonResponse
 		if ($state instanceof Exception) {
 			// Prepare the error response.
 			$this->error	= true;
-			$this->header	= JText::_('INSTL_HEADER_ERROR');
+			$this->header	= JText::_('JSON_HEADER_ERROR');
 			$this->message	= $state->getMessage();
 		} else {
 			// Prepare the response data.
