@@ -1,0 +1,21 @@
+<?php
+/**
+ * Document Description
+ *
+ * Document Long Description
+ *
+ * PHP4/5
+ *
+ * Created on Jul 8, 2008
+ *
+ * @package package_name
+ * @author Your Name <author@toowoombarc.qld.gov.au>
+ * @author Toowoomba Regional Council Information Management Branch
+ * @license GNU/GPL http://www.gnu.org/licenses/gpl.html
+ * @copyright 2008 Toowoomba Regional Council/Developer Name
+ * @version SVN: $Id: admin.gamma.php 20528 2011-02-03 07:52:56Z pasamio $
+ * @see http://joomlacode.org/gf/project/	JoomlaCode Project:
+ */
+
+JToolBarHelper::Title(JText::_('COM_GAMMA_TITLE'));
+echo '<p>'. JText::_('COM_GAMMA_TESTING_COMPONENT_BACKEND') .'</p>';
