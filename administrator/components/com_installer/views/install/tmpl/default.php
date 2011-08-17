@@ -11,7 +11,9 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
+<div id="installmessage">
 <?php if ($this->showMessage) : ?>
 <?php echo $this->loadTemplate('message'); ?>
 <?php endif; ?>
+</div>
 <?php echo $this->loadTemplate('form'); ?>

@@ -96,14 +96,14 @@ class InstallerModelInstall extends JModel
 				break;
 
 			default:
-				$app->setUserState('com_installer.message', JText::_('COM_INSTALLER_NO_INSTALL_TYPE_FOUND'));
+				$app->enqueueMessage(JText::_('COM_INSTALLER_NO_INSTALL_TYPE_FOUND'));
 				return false;
 				break;
 		}
 
 		// Was the package unpacked?
 		if (!$package) {
-			$app->setUserState('com_installer.message', JText::_('COM_INSTALLER_UNABLE_TO_FIND_INSTALL_PACKAGE'));
+			$app->enqueueMessage(JText::_('COM_INSTALLER_UNABLE_TO_FIND_INSTALL_PACKAGE'));
 			return false;
 		}
 
@@ -122,7 +122,6 @@ class InstallerModelInstall extends JModel
 		}
 
 		// Set some model state values
-		$app	= JFactory::getApplication();
 		$app->enqueueMessage($msg);
 		$this->setState('name', $installer->get('name'));
 		$this->setState('result', $result);
@@ -137,7 +136,6 @@ class InstallerModelInstall extends JModel
 		}
 
 		JInstallerHelper::cleanupInstall($package['packagefile'], $package['extractdir']);
-
 
 		return $result;
 	}

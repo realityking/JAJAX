@@ -44,7 +44,7 @@ window.addEvent('domready', function() {
 				},
 				onFailure: function(xhr) {
 					var r = JSON.decode(xhr.responseText);
-					alert(xhr.responseText);
+
 					if (r) {
 						Joomla.replaceTokens(r.token);
 						if (r.messages) {

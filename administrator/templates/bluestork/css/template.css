@@ -3214,3 +3214,17 @@ div#element-box.login  {
 div.CodeMirror-wrapping {
 	border: 1px solid #cccccc;
 }
+
+/* Spinner */
+.spinner {
+	position: absolute;
+	opacity: 0.9;
+	z-index: 999;
+	background: #fff;
+}
+
+.spinner-img {
+	background: url('../../../../media/system/images/spinnerbig.gif') no-repeat;
+	width: 66px;
+	height: 66px;
+}

@@ -10,8 +10,16 @@
 
 // no direct access
 defined('_JEXEC') or die;
+
+JHtml::_('behavior.framework', true);
+JHtml::_('script', 'com_installer/installer.js', true, true);
 ?>
 <script type="text/javascript">
+	window.addEvent('domready', function(){
+		var elem = $$('#element-box .m')[0];
+		new Joomla.Installer(elem, 'install_package_button', 'install_directory_button', 'install_url_button', 'install_package');
+	});
+
 	Joomla.submitbutton = function(pressbutton) {
 		var form = document.getElementById('adminForm');
 
@@ -59,20 +67,21 @@ defined('_JEXEC') or die;
 			<legend><?php echo JText::_('COM_INSTALLER_UPLOAD_PACKAGE_FILE'); ?></legend>
 			<label for="install_package"><?php echo JText::_('COM_INSTALLER_PACKAGE_FILE'); ?></label>
 			<input class="input_box" id="install_package" name="install_package" type="file" size="57" />
-			<input class="button" type="button" value="<?php echo JText::_('COM_INSTALLER_UPLOAD_AND_INSTALL'); ?>" onclick="Joomla.submitbutton()" />
+			<input class="button" id="install_package_button" data-installtype="upload" type="button" value="<?php echo JText::_('COM_INSTALLER_UPLOAD_AND_INSTALL'); ?>" />
 		</fieldset>
 		<div class="clr"></div>
 		<fieldset class="uploadform">
 			<legend><?php echo JText::_('COM_INSTALLER_INSTALL_FROM_DIRECTORY'); ?></legend>
 			<label for="install_directory"><?php echo JText::_('COM_INSTALLER_INSTALL_DIRECTORY'); ?></label>
-			<input type="text" id="install_directory" name="install_directory" class="input_box" size="70" value="<?php echo $this->state->get('install.directory'); ?>" />			<input type="button" class="button" value="<?php echo JText::_('COM_INSTALLER_INSTALL_BUTTON'); ?>" onclick="Joomla.submitbutton3()" />
+			<input type="text" id="install_directory" name="install_directory" class="input_box" size="70" value="<?php echo $this->state->get('install.directory'); ?>" />
+			<input type="button" id="install_directory_button" data-installtype="folder" class="button" value="<?php echo JText::_('COM_INSTALLER_INSTALL_BUTTON'); ?>" />
 		</fieldset>
 		<div class="clr"></div>
 		<fieldset class="uploadform">
 			<legend><?php echo JText::_('COM_INSTALLER_INSTALL_FROM_URL'); ?></legend>
 			<label for="install_url"><?php echo JText::_('COM_INSTALLER_INSTALL_URL'); ?></label>
 			<input type="text" id="install_url" name="install_url" class="input_box" size="70" value="http://" />
-			<input type="button" class="button" value="<?php echo JText::_('COM_INSTALLER_INSTALL_BUTTON'); ?>" onclick="Joomla.submitbutton4()" />
+			<input type="button" id="install_url_button" data-installtype="url" class="button" value="<?php echo JText::_('COM_INSTALLER_INSTALL_BUTTON'); ?>" />
 		</fieldset>
 		<input type="hidden" name="type" value="" />
 		<input type="hidden" name="installtype" value="upload" />
